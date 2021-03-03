@@ -1,4 +1,4 @@
-module github.com/apex/gateway
+module github.com/indiereign/gateway
 
 go 1.12
 
