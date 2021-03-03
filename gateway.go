@@ -29,12 +29,13 @@ func ListenAndServe(addr string, h http.Handler) error {
 // NewGateway creates a gateway using the provided http.Handler enabling use in existing aws-lambda-go
 // projects
 func NewGateway(h http.Handler) *Gateway {
-	return &Gateway{h: h}
+	return &Gateway{h: h, onlyUseMultiValueHeaders: false}
 }
 
 // Gateway wrap a http handler to enable use as a lambda.Handler
 type Gateway struct {
-	h http.Handler
+	h                        http.Handler
+	onlyUseMultiValueHeaders bool
 }
 
 // Invoke Handler implementation

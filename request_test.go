@@ -125,8 +125,9 @@ func TestNewRequest_multiHeader(t *testing.T) {
 		Path:       "/pets",
 		Body:       `{ "name": "Tobi" }`,
 		MultiValueHeaders: map[string][]string{
-			"X-APEX":   []string{"apex1", "apex2"},
-			"X-APEX-2": []string{"apex-1", "apex-2"},
+			"X-APEX":     []string{"apex1", "apex2"},
+			"X-APEX-2":   []string{"apex-1", "apex-2"},
+			"lower-case": []string{"first", "second"},
 		},
 		Headers: map[string]string{
 			"Content-Type": "application/json",
@@ -148,8 +149,9 @@ func TestNewRequest_multiHeader(t *testing.T) {
 	assert.Equal(t, `18`, r.Header.Get("Content-Length"))
 	assert.Equal(t, `application/json`, r.Header.Get("Content-Type"))
 	assert.Equal(t, `bar`, r.Header.Get("X-Foo"))
-	assert.Equal(t, []string{"apex1", "apex2"}, r.Header["X-APEX"])
-	assert.Equal(t, []string{"apex-1", "apex-2"}, r.Header["X-APEX-2"])
+	assert.Equal(t, []string{"apex1", "apex2"}, r.Header.Values("X-APEX"))
+	assert.Equal(t, []string{"apex-1", "apex-2"}, r.Header.Values("X-APEX-2"))
+	assert.Equal(t, []string{"first", "second"}, r.Header.Values("Lower-Case"))
 }
 
 func TestNewRequest_body(t *testing.T) {

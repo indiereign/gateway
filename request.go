@@ -60,7 +60,9 @@ func NewRequest(ctx context.Context, e events.APIGatewayProxyRequest) (*http.Req
 	}
 
 	for k, values := range e.MultiValueHeaders {
-		req.Header[k] = values
+		for _, v := range values {
+			req.Header.Add(k, v)
+		}
 	}
 
 	// content-length
