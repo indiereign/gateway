@@ -61,10 +61,9 @@ func (w *ResponseWriter) WriteHeader(status int) {
 	mvh := make(map[string][]string)
 
 	for k, v := range w.Header() {
+		mvh[k] = v
 		if len(v) == 1 {
 			h[k] = v[0]
-		} else if len(v) > 1 {
-			mvh[k] = v
 		}
 	}
 
@@ -118,7 +117,7 @@ func isTextMime(kind string) bool {
 	}
 
 	switch mt {
-	case "image/svg+xml", "application/json", "application/xml","application/javascript":
+	case "image/svg+xml", "application/json", "application/xml", "application/javascript":
 		return true
 	default:
 		return false
